@@ -31,7 +31,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     return res.status(200).json(data); // Return the weather data to the client
-  } catch (error) {
-    return res.status(500).json({ error: error.message || 'Unexpected error' });
+} catch (error: unknown) {
+    if (error instanceof Error) {
+      return res.status(500).json({ error: error.message });
+    }
+    return res.status(500).json({ error: 'Unexpected error' });
   }
 }
