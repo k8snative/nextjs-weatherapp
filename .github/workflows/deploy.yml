@@ -23,7 +23,9 @@ jobs:
             cd /var/www/html/nextjs/nextjs-weatherapp
             git fetch --all
             git reset --hard origin/main
+            export PATH="/home/ubuntu/.nvm/versions/node/v20.19.1/bin:$PATH"
             npm install
+            command -v pm2 >/dev/null 2>&1 || npm install -g pm2
             npm run build
             pm2 restart weather-app || pm2 start npm --name "weather-app" -- run start
             pm2 save
